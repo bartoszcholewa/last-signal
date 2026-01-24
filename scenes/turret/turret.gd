@@ -3,12 +3,15 @@ extends Node2D
 signal died
 
 const BULLET_SCENE: PackedScene = preload("uid://d35rd07yoeys4")
+const SHELL_EFFECT_SCENE: PackedScene = preload("uid://bq2vqv3qsflec")
+const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 
 @onready var ray_cast_2d: RayCast2D = %RayCast2D
 @onready var reload_timer: Timer = %ReloadTimer
 @onready var barrel: Node2D = %Barrel
 @onready var barrel_position: Marker2D = $Visuals/Barrel/BarrelPosition
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var shell_position: Marker2D = $Visuals/Barrel/ShellPosition
 
 ## Current selected target
 var target: Node2D = null
@@ -109,6 +112,17 @@ func try_to_shoot() -> void:
 	var bullet_direction: Vector2 = bullet.global_position.direction_to(target.global_position)
 	bullet.start(bullet_direction)
 	get_parent().add_child(bullet)
+
+	var shell: Node2D = SHELL_EFFECT_SCENE.instantiate()
+	shell.global_position = shell_position.global_position
+	shell.global_rotation = shell_position.global_rotation
+	get_parent().add_child(shell)
+
+	var flash: GPUParticles2D = MUZZLE_FLASH_SCENE.instantiate()
+	flash.global_position = barrel_position.global_position
+	flash.global_rotation = barrel_position.global_rotation
+	get_parent().add_child(flash)
+
 
 	reload_timer.start()
 

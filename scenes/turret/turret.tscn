@@ -64,7 +64,7 @@ autoplay = "radar_spin"
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_m8ak0")]
 
-[node name="Visuals" type="Node2D" parent="."]
+[node name="Visuals" type="Node2D" parent="." groups=["visual"]]
 scale = Vector2(0.2, 0.2)
 
 [node name="HurtboxSprite2D" type="Sprite2D" parent="Visuals"]
@@ -97,6 +97,8 @@ texture = ExtResource("2_xfx51")
 [node name="BarrelPosition" type="Marker2D" parent="Visuals/Barrel"]
 position = Vector2(504.99976, 0)
 gizmo_extents = 53.5
+
+[node name="ShellPosition" type="Marker2D" parent="Visuals/Barrel"]
 
 [node name="RadarSprite" type="Sprite2D" parent="Visuals"]
 scale = Vector2(0.9999998, 0.9999998)

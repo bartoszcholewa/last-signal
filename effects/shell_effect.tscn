@@ -1,0 +1,113 @@
+[gd_scene load_steps=11 format=3 uid="uid://bq2vqv3qsflec"]
+
+[ext_resource type="Texture2D" uid="uid://b45dwevf1jobl" path="res://scenes/bullet/turret_v1_shell-03.png" id="1_27iex"]
+
+[sub_resource type="Animation" id="Animation_27iex"]
+resource_name = "default"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_dlpmo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1irvb"]
+_data = {
+&"RESET": SubResource("Animation_dlpmo"),
+&"default": SubResource("Animation_27iex")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_27iex"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_3sauc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5tehm"]
+curve = SubResource("Curve_3sauc")
+
+[sub_resource type="Curve" id="Curve_dlpmo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.84313726, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1irvb"]
+curve = SubResource("Curve_dlpmo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3sauc"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(-0.5, 1, 0)
+spread = 20.0
+initial_velocity_min = 500.0
+initial_velocity_max = 1000.0
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = 359.99997
+angular_velocity_curve = SubResource("CurveTexture_5tehm")
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -10.640002
+linear_accel_max = 99.99999
+damping_min = 500.00003
+damping_max = 500.00003
+scale_min = 0.19999999
+scale_max = 0.19999999
+scale_curve = SubResource("CurveTexture_1irvb")
+anim_speed_max = 1.6999999
+
+[node name="ShellEffect" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1irvb")
+}
+autoplay = "default"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_27iex")
+emitting = false
+amount = 1
+texture = ExtResource("1_27iex")
+lifetime = 10.0
+one_shot = true
+fixed_fps = 0
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_3sauc")

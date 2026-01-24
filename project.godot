@@ -29,3 +29,4 @@ version_control/autoload_on_startup=true
 
 enemy=""
 turret=""
+visual=""
