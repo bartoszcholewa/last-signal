@@ -23,11 +23,9 @@ motion_mode = 1
 script = ExtResource("1_cdc21")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_r4vp2")]
-max_speed = 50
-acceleration = 50.0
+acceleration = 1.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_iiipk")]
-max_health = 5
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_agndl")]
 collision_layer = 0
@@ -35,6 +33,7 @@ collision_mask = 256
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+visible = false
 shape = SubResource("CircleShape2D_agndl")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("6_vdwxf")]
@@ -42,6 +41,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+visible = false
 shape = SubResource("CircleShape2D_vdwxf")
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -51,4 +51,5 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_2184v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_cdc21")

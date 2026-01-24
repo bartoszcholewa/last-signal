@@ -6,16 +6,40 @@
 [node name="Main" type="Node2D"]
 
 [node name="Turret" parent="." instance=ExtResource("1_ig7tw")]
-position = Vector2(200, 358)
+position = Vector2(960, 540)
 
 [node name="BasicEnemy" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(927, 139)
+position = Vector2(104, 94)
 
 [node name="BasicEnemy2" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1122, 258)
+position = Vector2(1806, 107)
 
 [node name="BasicEnemy3" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1241, 524)
+position = Vector2(1778, 947)
 
 [node name="BasicEnemy4" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(741, 611)
+position = Vector2(52, 968)
+
+[node name="BasicEnemy5" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(82, 692)
+
+[node name="BasicEnemy6" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(63, 317)
+
+[node name="BasicEnemy7" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(42, 474)
+
+[node name="BasicEnemy8" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1840, 529)
+
+[node name="BasicEnemy9" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1816, 792)
+
+[node name="BasicEnemy10" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1828, 298)
+
+[node name="BasicEnemy11" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1762, 1022)
+
+[node name="BasicEnemy12" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1830, 217)
