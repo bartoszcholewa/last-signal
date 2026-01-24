@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://d35rd07yoeys4"]
+
+[ext_resource type="Texture2D" uid="uid://bujfgs1wubenu" path="res://scenes/bullet/turret_v1_bullet.png" id="1_7c8un"]
+[ext_resource type="Script" uid="uid://dr1ccof67mrkv" path="res://scenes/bullet/bullet.gd" id="1_83itf"]
+[ext_resource type="PackedScene" uid="uid://bquqpdl3ikwog" path="res://scenes/components/hitbox_component.tscn" id="3_c6pnf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6pnf"]
+size = Vector2(15, 5)
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_83itf")
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+position = Vector2(35, 0)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("1_7c8un")
+
+[node name="LifeTimer" type="Timer" parent="."]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_c6pnf")]
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(7, 0)
+shape = SubResource("RectangleShape2D_c6pnf")

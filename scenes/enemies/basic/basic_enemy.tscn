@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqr7w8lfplud7"]
+
+[ext_resource type="Texture2D" uid="uid://d3cmyv0pg02nj" path="res://scenes/enemies/basic/enemy_v1.png" id="1_2184v"]
+[ext_resource type="Script" uid="uid://bvukhbajgyd1y" path="res://scenes/enemies/basic/basic_enemy.gd" id="1_cdc21"]
+[ext_resource type="PackedScene" uid="uid://c80ejpsq37c0q" path="res://scenes/components/velocity_component.tscn" id="2_r4vp2"]
+[ext_resource type="PackedScene" uid="uid://cu3bsipy85liq" path="res://scenes/components/health_component.tscn" id="3_iiipk"]
+[ext_resource type="PackedScene" uid="uid://vdv3ofj5cs4c" path="res://scenes/components/hurtbox_component.tscn" id="5_agndl"]
+[ext_resource type="PackedScene" uid="uid://bquqpdl3ikwog" path="res://scenes/components/hitbox_component.tscn" id="6_vdwxf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_agndl"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vdwxf"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cdc21"]
+radius = 8.0
+
+[node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_cdc21")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("2_r4vp2")]
+max_speed = 50
+acceleration = 50.0
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_iiipk")]
+max_health = 5
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_agndl")]
+collision_layer = 0
+collision_mask = 256
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_agndl")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("6_vdwxf")]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_vdwxf")
+
+[node name="Visuals" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("1_2184v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cdc21")

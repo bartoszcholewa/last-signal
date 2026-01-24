@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://yn8oeuvpi3qs"]
+
+[ext_resource type="Texture2D" uid="uid://cs1wy20prdnpf" path="res://scenes/turret/turret_v1_base.png" id="1_rmqmx"]
+[ext_resource type="Script" uid="uid://dpcntdukm2h2u" path="res://scenes/turret/turret.gd" id="1_xfx51"]
+[ext_resource type="PackedScene" uid="uid://cu3bsipy85liq" path="res://scenes/components/health_component.tscn" id="2_m8ak0"]
+[ext_resource type="Texture2D" uid="uid://bqeg5bkvlqv8b" path="res://scenes/turret/turret_v1_barrel.png" id="2_xfx51"]
+[ext_resource type="PackedScene" uid="uid://vdv3ofj5cs4c" path="res://scenes/components/hurtbox_component.tscn" id="3_ynqyc"]
+[ext_resource type="Texture2D" uid="uid://b2jp2hemqtcqx" path="res://scenes/turret/turret_v1_hurtbox.png" id="4_bjbsn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ynqyc"]
+radius = 55.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjbsn"]
+radius = 55.0
+
+[node name="Turret" type="CharacterBody2D" groups=["turret"]]
+collision_layer = 9
+motion_mode = 1
+script = ExtResource("1_xfx51")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_m8ak0")]
+
+[node name="Visuals" type="Node2D" parent="."]
+scale = Vector2(0.1, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("4_bjbsn")
+
+[node name="BaseSprite" type="Sprite2D" parent="Visuals"]
+unique_name_in_owner = true
+texture = ExtResource("1_rmqmx")
+
+[node name="Barrel" type="Node2D" parent="Visuals"]
+unique_name_in_owner = true
+
+[node name="BarrelSprite" type="Sprite2D" parent="Visuals/Barrel"]
+unique_name_in_owner = true
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("2_xfx51")
+
+[node name="BarrelPosition" type="Marker2D" parent="Visuals/Barrel"]
+position = Vector2(504.99976, 0)
+gizmo_extents = 53.5
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_ynqyc")]
+collision_layer = 0
+collision_mask = 4
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_ynqyc")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+target_position = Vector2(800, 0)
+collision_mask = 2
+
+[node name="ReloadTimer" type="Timer" parent="RayCast2D"]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bjbsn")

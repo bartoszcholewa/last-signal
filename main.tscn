@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnm0ploeugeyj"]
+
+[ext_resource type="PackedScene" uid="uid://yn8oeuvpi3qs" path="res://scenes/turret/turret.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bqr7w8lfplud7" path="res://scenes/enemies/basic/basic_enemy.tscn" id="2_0xm2m"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Turret" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(200, 358)
+
+[node name="BasicEnemy" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(927, 139)
+
+[node name="BasicEnemy2" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1122, 258)
+
+[node name="BasicEnemy3" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1241, 524)
+
+[node name="BasicEnemy4" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(741, 611)
