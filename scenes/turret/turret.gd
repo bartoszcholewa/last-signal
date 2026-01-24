@@ -49,12 +49,22 @@ func shoot() -> void:
 
 
 func find_target() -> Node2D:
-	var new_target: Node2D = null
+	var targets = get_tree().get_nodes_in_group("enemy")
 
-	if get_tree().has_group("enemy"):
-		new_target = get_tree().get_first_node_in_group("enemy")
+	if targets.is_empty():
+		print("No targets detected")
+		return
 
-	return new_target
+	# Sort by closest to player
+	targets.sort_custom(
+		func(a: Node2D, b: Node2D):
+			var a_distance = a.global_position.distance_squared_to(global_position)
+			var b_distance = b.global_position.distance_squared_to(global_position)
+			return a_distance < b_distance
+	)
+
+	# Return closest target
+	return targets[0]
 
 
 func _on_reload_timer_timeout() -> void:
