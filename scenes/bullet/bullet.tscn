@@ -15,10 +15,12 @@ scale = Vector2(0.2, 0.2)
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 position = Vector2(35, 0)
-scale = Vector2(0.99999994, 0.99999994)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_7c8un")
 
 [node name="LifeTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 
 [node name="HitboxComponent" parent="." instance=ExtResource("3_c6pnf")]
 collision_layer = 256

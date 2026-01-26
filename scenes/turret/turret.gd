@@ -123,7 +123,6 @@ func try_to_shoot() -> void:
 	flash.global_rotation = barrel_position.global_rotation
 	get_parent().add_child(flash)
 
-
 	reload_timer.start()
 
 

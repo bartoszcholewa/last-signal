@@ -23,7 +23,8 @@ motion_mode = 1
 script = ExtResource("1_cdc21")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_r4vp2")]
-acceleration = 1.0
+max_speed = 50
+acceleration = 10.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_iiipk")]
 
