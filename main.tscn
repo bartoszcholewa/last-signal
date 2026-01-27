@@ -7,30 +7,24 @@
 [node name="Main" type="Node2D"]
 
 [node name="TurretF" parent="." instance=ExtResource("1_ig7tw")]
-position = Vector2(960, 540)
+position = Vector2(640, 360)
 
 [node name="ManualControllSwitch" type="CheckButton" parent="."]
-offset_left = 17.0
-offset_top = 1019.0
-offset_right = 190.0
-offset_bottom = 1050.0
+offset_left = 23.0
+offset_top = 655.0
+offset_right = 196.0
+offset_bottom = 686.0
 text = "Manual Controll"
 script = ExtResource("3_h2yge")
 
 [node name="BasicEnemy" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(144, 122)
+position = Vector2(97, 83)
 
 [node name="BasicEnemy2" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(115, 969)
+position = Vector2(1170, 70)
 
 [node name="BasicEnemy3" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1813, 1018)
+position = Vector2(1176, 632)
 
 [node name="BasicEnemy4" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1783, 103)
-
-[node name="BasicEnemy5" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(926, 81)
-
-[node name="BasicEnemy6" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(947, 1019)
+position = Vector2(93, 620)

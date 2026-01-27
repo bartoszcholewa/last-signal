@@ -3,18 +3,20 @@ extends Node2D
 signal died
 
 const BULLET_SCENE: PackedScene = preload("uid://d35rd07yoeys4")
+const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 
 @onready var turret_sprite: Sprite2D = $Sprite2D
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var reload_timer: Timer = $ReloadTimer
 @onready var muzzle: Marker2D = $Muzzle
+@onready var frame_label: Label = $FrameLabel
+@onready var angle_label: Label = $AngleLabel
 
 # Configuration
 var frames_count: int = 64
-var rotation_offset_degrees: float = 90.0
-var current_rotation: float = deg_to_rad(-90)
-
+var rotation_offset_degrees: float = 0
+var current_rotation: float = deg_to_rad(0)
 ## Turret speed RAD/s
 var max_rotation_speed: float = 5.0 #5.0
 
@@ -34,10 +36,13 @@ var angle_step: float = 360.0 / float(frames_count)
 var target_position: Vector2 = Vector2.ZERO
 
 ## Distance from center to barrel tip (in pixels)
-var barrel_offset_distance: float = 55.0 #55.0
+var barrel_offset_distance: float = 95.0 #55.0
 
 ## 0.5 is standard 2:1 Isometric. Adjust if needed.
 var iso_squash_ratio: float = 0.75 # 0.75
+
+## How many pixels to pull the muzzle back at 45/135/225/315 degrees
+var diagonal_shrink_amount: float = 2.0
 
 func _ready() -> void:
 	# Connect to signals
@@ -124,30 +129,49 @@ func set_rotation_to_target(target_angle: float, delta: float) -> void:
 	# Wrap the actual physics rotation to keep it between -PI and PI
 	current_rotation = wrapf(current_rotation, -PI, PI)
 
-
 func set_turret_rotation_frame():
-	# 1. Convert accumulated rotation to degrees
-	var angle_deg = rad_to_deg(current_rotation)
-	var logic_angle = angle_deg
+	# --- FRAME CALCULATION (Using Projected 3D Angle) ---
 
-	# 2. Apply offset
-	angle_deg += rotation_offset_degrees
+	# 1. Create a vector from the current Screen Space rotation
+	var vector = Vector2.RIGHT.rotated(current_rotation)
 
-	# 3. Normalize angle to always be between 0.0 and 360.0
-	# fposmod floats the modulo wrapping correctly for negative numbers.
-	# e.g. fposmod(-400, 360) becomes 320.
-	angle_deg = fposmod(angle_deg, 360.0)
 
-	# 4. Calculate frame index
-	var frame_index = int(round(angle_deg / angle_step))
+	# 2. "Un-squash" the vector.
+	# Since the sprite sheet is rendered in Isometric (where Y is squashed),
+	# we must stretch Y back out to find the "True 3D Angle" that this frame represents.
+	if iso_squash_ratio != 0:
+		vector.y /= iso_squash_ratio
 
-	# 5. Set frame (Wrap 64 back to 0 using standard modulo)
-	turret_sprite.frame = frame_index % frames_count
+	# 3. Get the angle for the sprite lookup
+	var sprite_angle_deg = rad_to_deg(vector.angle())
+	var logic_angle = sprite_angle_deg
+
+	# 4. Apply offset and normalize
+	sprite_angle_deg += rotation_offset_degrees
+	sprite_angle_deg = fposmod(sprite_angle_deg, 360.0)
+
+	# 5. Set the frame based on the CORRECTED angle
+	var frame_index = int(round(sprite_angle_deg / angle_step))
+	var turret_sprite_frame: int = frame_index % frames_count
+	turret_sprite.frame = turret_sprite_frame
+
+	frame_label.text = "Frame: %d" % turret_sprite_frame
+	angle_label.text = "Angle: %d°" % int(rad_to_deg(current_rotation)) # Keep debug showing real screen angle
+
 	var rads = deg_to_rad(logic_angle)
 
-	# Muzzle position
-	muzzle.position.x = cos(rads) * barrel_offset_distance
-	muzzle.position.y = sin(rads) * barrel_offset_distance * iso_squash_ratio
+	# Calculate a "Wobble" factor.
+	# sin(angle * 2) is 0.0 at 0, 90, 180, 270.
+	# sin(angle * 2) is 1.0 (or -1.0) at 45, 135, 225, 315.
+	var diagonal_intensity = abs(sin(rads * 2))
+
+	# Dynamically adjust the radius.
+	# At cardinal directions, offset is 0. At diagonals, it subtracts the full shrink amount.
+	var current_barrel_length = barrel_offset_distance - (diagonal_shrink_amount * diagonal_intensity)
+
+	# Apply position
+	muzzle.position.x = cos(rads) * current_barrel_length
+	muzzle.position.y = sin(rads) * current_barrel_length * iso_squash_ratio
 
 
 func lock_target() -> float:
@@ -178,7 +202,14 @@ func try_to_shoot() -> void:
 	bullet.global_position = muzzle.global_position
 	var bullet_direction: Vector2 = bullet.global_position.direction_to(target_position)
 	bullet.start(bullet_direction)
+	# direction = bullet_direction
+	# rotation = direction.angle()
 	get_parent().add_child(bullet)
+
+	var muzzle_flash: Node2D = MUZZLE_FLASH_SCENE.instantiate()
+	muzzle_flash.global_position = muzzle.global_position
+	muzzle_flash.global_rotation = (muzzle_flash.global_position.direction_to(target_position)).angle()
+	get_parent().add_child(muzzle_flash)
 
 	reload_timer.start()
 
