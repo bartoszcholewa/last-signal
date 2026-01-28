@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsmlrvmteivdw"]
+[gd_scene load_steps=6 format=3 uid="uid://bsmlrvmteivdw"]
 
 [ext_resource type="Script" uid="uid://bqnjoh6pgm0u6" path="res://scenes/turret_f/turret_f.gd" id="1_3wo5k"]
 [ext_resource type="PackedScene" uid="uid://cu3bsipy85liq" path="res://scenes/components/health_component.tscn" id="2_anqwv"]
 [ext_resource type="Texture2D" uid="uid://40xpun5gmjau" path="res://scenes/turret_f/turret_sheet.png" id="3_78ux1"]
+[ext_resource type="Script" uid="uid://c3xbaktpqfwup" path="res://scenes/turret_f/locked_target.gd" id="4_6dl4b"]
 [ext_resource type="Script" uid="uid://b2y7kjtkluise" path="res://scenes/turret_f/muzzle.gd" id="4_78ux1"]
 
 [node name="TurretF" type="Node2D" groups=["turret"]]
@@ -10,38 +11,66 @@ script = ExtResource("1_3wo5k")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_anqwv")]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Visuals" type="Node2D" parent="."]
+position = Vector2(0, -80)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2(0, -1)
 texture = ExtResource("3_78ux1")
 offset = Vector2(1, 48)
 hframes = 8
 vframes = 8
 
+[node name="LockedTarget" type="RayCast2D" parent="Visuals"]
+unique_name_in_owner = true
+target_position = Vector2(500, 0)
+collision_mask = 2
+script = ExtResource("4_6dl4b")
+
+[node name="Line2D" type="Line2D" parent="Visuals/LockedTarget"]
+width = 2.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="BarrelTip" type="Marker2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2(92, 0)
+gizmo_extents = 20.0
+script = ExtResource("4_78ux1")
+
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-visible = false
-target_position = Vector2(500, 0)
-collision_mask = 2
+[node name="DebugInfo" type="Node2D" parent="."]
+scale = Vector2(0.5, 0.5)
 
-[node name="Muzzle" type="Marker2D" parent="."]
-visible = false
-gizmo_extents = 20.0
-script = ExtResource("4_78ux1")
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugInfo"]
+offset_left = -202.0
+offset_top = 66.0
+offset_right = -64.0
+offset_bottom = 214.0
 
-[node name="FrameLabel" type="Label" parent="."]
-offset_left = -114.0
-offset_top = 105.0
-offset_right = -74.0
-offset_bottom = 128.0
-theme_override_font_sizes/font_size = 12
+[node name="FrameLabel" type="Label" parent="DebugInfo/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Frame: 1"
 
-[node name="AngleLabel" type="Label" parent="."]
-offset_left = -113.0
-offset_top = 123.0
-offset_right = -42.0
-offset_bottom = 146.0
-theme_override_font_sizes/font_size = 12
+[node name="AngleLabel" type="Label" parent="DebugInfo/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Angle: 0°"
+
+[node name="VelocityLabel" type="Label" parent="DebugInfo/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Velocity: 0.0"
+
+[node name="StateLabel" type="Label" parent="DebugInfo/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "State: IDLE"

@@ -1,30 +1,71 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnm0ploeugeyj"]
+[gd_scene load_steps=6 format=3 uid="uid://dnm0ploeugeyj"]
 
+[ext_resource type="PackedScene" uid="uid://c0m67fwbtxh6c" path="res://game_camera.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bsmlrvmteivdw" path="res://scenes/turret_f/turret_f.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bqr7w8lfplud7" path="res://scenes/enemies/basic/basic_enemy.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dyy8taqy0b5sl" path="res://debug_info_switch.gd" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://dxwnlblpda60v" path="res://manual_controll_switch.gd" id="3_h2yge"]
 
 [node name="Main" type="Node2D"]
 
-[node name="TurretF" parent="." instance=ExtResource("1_ig7tw")]
-position = Vector2(640, 360)
+[node name="GameUI" type="CanvasLayer" parent="."]
 
-[node name="ManualControllSwitch" type="CheckButton" parent="."]
-offset_left = 23.0
-offset_top = 655.0
-offset_right = 196.0
-offset_bottom = 686.0
-text = "Manual Controll"
+[node name="Panel" type="Panel" parent="GameUI"]
+custom_minimum_size = Vector2(100, 120)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -130.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="GameUI/Panel"]
+layout_mode = 0
+offset_right = 173.0
+offset_bottom = 31.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ManualControlSwitch" type="CheckButton" parent="GameUI/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Manual Control"
 script = ExtResource("3_h2yge")
 
-[node name="BasicEnemy" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(97, 83)
+[node name="DebugInfoSwitch" type="CheckButton" parent="GameUI/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Debug Info"
+script = ExtResource("2_lquwl")
 
-[node name="BasicEnemy2" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1170, 70)
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameUI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
 
-[node name="BasicEnemy3" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1176, 632)
+[node name="GameCamera" parent="." instance=ExtResource("1_1bvp3")]
+position = Vector2(960, 540)
 
-[node name="BasicEnemy4" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(93, 620)
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="TurretF" parent="Entities" instance=ExtResource("1_ig7tw")]
+position = Vector2(960, 540)
+
+[node name="BasicEnemy" parent="Entities" instance=ExtResource("2_0xm2m")]
+position = Vector2(68, 63)
+
+[node name="BasicEnemy2" parent="Entities" instance=ExtResource("2_0xm2m")]
+position = Vector2(491, 53)
+
+[node name="BasicEnemy3" parent="Entities" instance=ExtResource("2_0xm2m")]
+position = Vector2(1871, 55)
+
+[node name="BasicEnemy4" parent="Entities" instance=ExtResource("2_0xm2m")]
+position = Vector2(1498, 64)

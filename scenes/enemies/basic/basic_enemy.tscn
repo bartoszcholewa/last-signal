@@ -23,10 +23,11 @@ motion_mode = 1
 script = ExtResource("1_cdc21")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_r4vp2")]
-max_speed = 50
+max_speed = 100
 acceleration = 10.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_iiipk")]
+max_health = 3
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_agndl")]
 collision_layer = 0

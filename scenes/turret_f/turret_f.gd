@@ -5,15 +5,19 @@ signal died
 const BULLET_SCENE: PackedScene = preload("uid://d35rd07yoeys4")
 const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 
-@onready var turret_sprite: Sprite2D = $Sprite2D
-@onready var ray_cast_2d: RayCast2D = $RayCast2D
+@onready var turret_sprite: Sprite2D = %Sprite2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var reload_timer: Timer = $ReloadTimer
-@onready var muzzle: Marker2D = $Muzzle
-@onready var frame_label: Label = $FrameLabel
-@onready var angle_label: Label = $AngleLabel
+@onready var locked_target: RayCast2D = %LockedTarget
+@onready var barrel_tip: Marker2D = %BarrelTip
+@onready var frame_label: Label = %FrameLabel
+@onready var angle_label: Label = %AngleLabel
+@onready var velocity_label: Label = %VelocityLabel
+@onready var state_label: Label = %StateLabel
+@onready var debug_info: Node2D = $DebugInfo
 
 # Configuration
+var turret_pivot_offset: Vector2
 var frames_count: int = 64
 var rotation_offset_degrees: float = 0
 var current_rotation: float = deg_to_rad(0)
@@ -36,10 +40,10 @@ var angle_step: float = 360.0 / float(frames_count)
 var target_position: Vector2 = Vector2.ZERO
 
 ## Distance from center to barrel tip (in pixels)
-var barrel_offset_distance: float = 95.0 #55.0
+var barrel_offset_distance: float = 92.0
 
 ## 0.5 is standard 2:1 Isometric. Adjust if needed.
-var iso_squash_ratio: float = 0.75 # 0.75
+var iso_squash_ratio: float = 0.75
 
 ## How many pixels to pull the muzzle back at 45/135/225/315 degrees
 var diagonal_shrink_amount: float = 2.0
@@ -48,6 +52,12 @@ func _ready() -> void:
 	# Connect to signals
 	reload_timer.timeout.connect(_on_reload_timer_timeout)
 	health_component.died.connect(_on_died)
+	GameEvents.debug_info_changed.connect(_on_debug_info_changed)
+
+	turret_pivot_offset = $Visuals.position
+	print(turret_pivot_offset)
+
+	set_debug_info_display()
 
 func _process(delta):
 
@@ -97,8 +107,8 @@ func is_target_in_range() -> bool:
 	if GameEvents.manual_control:
 		return true
 	## Check if target is already in shooting range
-	if ray_cast_2d.is_colliding():
-		var collider: Node2D = ray_cast_2d.get_collider()
+	if locked_target.is_colliding():
+		var collider: Node2D = locked_target.get_collider()
 		if collider and collider.is_in_group("enemy"):
 			return true
 	return false
@@ -120,8 +130,17 @@ func set_rotation_to_target(target_angle: float, delta: float) -> void:
 	var target_velocity = direction * max_rotation_speed * speed_multiplier
 
 	# Accelerate or Decelerate towards that target velocity
-	var accel_rate = acceleration if abs(current_velocity) < abs(target_velocity) else deceleration
+	var accel_rate: float
+	if abs(current_velocity) <= abs(target_velocity):
+		accel_rate = acceleration
+		state_label.text = "State: ACCELERATE"
+	else:
+		accel_rate = deceleration
+		state_label.text = "State: DECELERATE"
+
 	current_velocity = move_toward(current_velocity, target_velocity, accel_rate * delta)
+
+	velocity_label.text = "Velocity: %.02f" % current_velocity
 
 	# Apply the velocity to the rotation
 	current_rotation += current_velocity * delta
@@ -170,14 +189,15 @@ func set_turret_rotation_frame():
 	var current_barrel_length = barrel_offset_distance - (diagonal_shrink_amount * diagonal_intensity)
 
 	# Apply position
-	muzzle.position.x = cos(rads) * current_barrel_length
-	muzzle.position.y = sin(rads) * current_barrel_length * iso_squash_ratio
+	barrel_tip.position.x = cos(rads) * current_barrel_length
+	barrel_tip.position.y = sin(rads) * current_barrel_length * iso_squash_ratio
 
 
 func lock_target() -> float:
 	## Get angle to selected target
-	var angle_to_target: float = global_position.direction_to(target_position).angle()
-	ray_cast_2d.global_rotation = angle_to_target
+	var true_pivot_global_position = global_position + turret_pivot_offset
+	var angle_to_target: float = true_pivot_global_position.direction_to(target_position).angle()
+	locked_target.global_rotation = angle_to_target
 	return angle_to_target
 
 
@@ -185,33 +205,38 @@ func is_barrel_aligned(target_angle: float) -> bool:
 	## Returns true if the barrel is within 5 degrees of the target
 	## and almost steady
 
-	return abs(angle_difference(current_rotation, target_angle)) < 0.05\
-		and current_velocity < 0.1\
-		and current_velocity > -0.1
+	var is_aligned = abs(angle_difference(current_rotation, target_angle)) < 0.05\
+		and current_velocity < 0.5\
+		and current_velocity > -0.5
+
+	if is_aligned:
+		current_velocity = 0
+		state_label.text = "State: ALIGNED"
+
+	return is_aligned
 
 
 func try_to_shoot() -> void:
 	## Check if reload time passed and create bullet
-
+	state_label.text = "State: SHOOTING"
 	if not reload_timer.is_stopped():
 		return
 
-	ray_cast_2d.enabled = false
+	locked_target.enabled = false
 
 	var bullet: Bullet = BULLET_SCENE.instantiate()
-	bullet.global_position = muzzle.global_position
+	bullet.global_position = barrel_tip.global_position
 	var bullet_direction: Vector2 = bullet.global_position.direction_to(target_position)
 	bullet.start(bullet_direction)
-	# direction = bullet_direction
-	# rotation = direction.angle()
 	get_parent().add_child(bullet)
 
 	var muzzle_flash: Node2D = MUZZLE_FLASH_SCENE.instantiate()
-	muzzle_flash.global_position = muzzle.global_position
+	muzzle_flash.global_position = barrel_tip.global_position
 	muzzle_flash.global_rotation = (muzzle_flash.global_position.direction_to(target_position)).angle()
 	get_parent().add_child(muzzle_flash)
 
 	reload_timer.start()
+	state_label.text = "State: RELOADING"
 
 func get_iso_angle_to_target(target_pos: Vector2) -> float:
 	# Get vector from turret to target
@@ -223,9 +248,20 @@ func get_iso_angle_to_target(target_pos: Vector2) -> float:
 
 	return vector_to_target.angle()
 
+
+func set_debug_info_display() -> void:
+	debug_info.visible = GameEvents.debug_info
+	barrel_tip.visible = GameEvents.debug_info
+	locked_target.visible = GameEvents.debug_info
+
+
+
+func _on_debug_info_changed() -> void:
+	set_debug_info_display()
+
 func _on_reload_timer_timeout() -> void:
 	## Activate range on bullet reload
-	ray_cast_2d.enabled = true
+	locked_target.enabled = true
 
 
 func _on_died() -> void:
