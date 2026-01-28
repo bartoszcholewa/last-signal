@@ -29,13 +29,13 @@ offset = Vector2(1, 48)
 hframes = 8
 vframes = 8
 
-[node name="LockedTarget" type="RayCast2D" parent="Visuals"]
+[node name="ShootRange" type="RayCast2D" parent="Visuals"]
 unique_name_in_owner = true
 target_position = Vector2(500, 0)
 collision_mask = 2
 script = ExtResource("4_6dl4b")
 
-[node name="Line2D" type="Line2D" parent="Visuals/LockedTarget"]
+[node name="Line2D" type="Line2D" parent="Visuals/ShootRange"]
 width = 2.0
 default_color = Color(1, 0, 0, 1)
 
@@ -87,9 +87,11 @@ collision_mask = 4
 health_component = NodePath("../HealthComponent")
 
 [node name="HurtboxCollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+visible = false
 position = Vector2(0, -29)
 shape = SubResource("CircleShape2D_qcyuj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -29)
 shape = SubResource("CircleShape2D_acm63")

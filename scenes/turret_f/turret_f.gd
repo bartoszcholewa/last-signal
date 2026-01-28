@@ -8,13 +8,13 @@ const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 @onready var turret_sprite: Sprite2D = %Sprite2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var reload_timer: Timer = $ReloadTimer
-@onready var locked_target: RayCast2D = %LockedTarget
 @onready var barrel_tip: Marker2D = %BarrelTip
 @onready var frame_label: Label = %FrameLabel
 @onready var angle_label: Label = %AngleLabel
 @onready var velocity_label: Label = %VelocityLabel
 @onready var state_label: Label = %StateLabel
 @onready var debug_info: Node2D = $DebugInfo
+@onready var shoot_range: RayCast2D = %ShootRange
 
 var effects_scene: Node2D
 
@@ -112,8 +112,8 @@ func is_target_in_range() -> bool:
 	if GameEvents.manual_control:
 		return true
 	## Check if target is already in shooting range
-	if locked_target.is_colliding():
-		var collider: Node2D = locked_target.get_collider()
+	if shoot_range.is_colliding():
+		var collider: Node2D = shoot_range.get_collider()
 		if collider and collider.is_in_group("enemy"):
 			return true
 	return false
@@ -202,7 +202,7 @@ func lock_target() -> float:
 	## Get angle to selected target
 	var true_pivot_global_position = global_position + turret_pivot_offset
 	var angle_to_target: float = true_pivot_global_position.direction_to(target_position).angle()
-	locked_target.global_rotation = angle_to_target
+	shoot_range.global_rotation = angle_to_target
 	return angle_to_target
 
 
@@ -227,7 +227,7 @@ func try_to_shoot() -> void:
 	if not reload_timer.is_stopped():
 		return
 
-	locked_target.enabled = false
+	shoot_range.enabled = false
 
 	var bullet: Bullet = BULLET_SCENE.instantiate()
 	bullet.global_position = barrel_tip.global_position
@@ -259,7 +259,7 @@ func get_iso_angle_to_target(target_pos: Vector2) -> float:
 func set_debug_info_display() -> void:
 	debug_info.visible = GameEvents.debug_info
 	barrel_tip.visible = GameEvents.debug_info
-	locked_target.visible = GameEvents.debug_info
+	shoot_range.visible = GameEvents.debug_info
 
 
 
@@ -268,7 +268,7 @@ func _on_debug_info_changed() -> void:
 
 func _on_reload_timer_timeout() -> void:
 	## Activate range on bullet reload
-	locked_target.enabled = true
+	shoot_range.enabled = true
 
 
 func _on_died() -> void:
