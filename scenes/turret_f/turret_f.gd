@@ -16,6 +16,8 @@ const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 @onready var state_label: Label = %StateLabel
 @onready var debug_info: Node2D = $DebugInfo
 
+var effects_scene: Node2D
+
 # Configuration
 var turret_pivot_offset: Vector2
 var frames_count: int = 64
@@ -56,6 +58,9 @@ func _ready() -> void:
 
 	turret_pivot_offset = $Visuals.position
 	print(turret_pivot_offset)
+
+	# Cache visual scene node
+	effects_scene = get_tree().get_first_node_in_group("effects")
 
 	set_debug_info_display()
 
@@ -228,12 +233,14 @@ func try_to_shoot() -> void:
 	bullet.global_position = barrel_tip.global_position
 	var bullet_direction: Vector2 = bullet.global_position.direction_to(target_position)
 	bullet.start(bullet_direction)
-	get_parent().add_child(bullet)
+	#get_parent().add_child(bullet)
+	effects_scene.add_child(bullet)
 
 	var muzzle_flash: Node2D = MUZZLE_FLASH_SCENE.instantiate()
 	muzzle_flash.global_position = barrel_tip.global_position
 	muzzle_flash.global_rotation = (muzzle_flash.global_position.direction_to(target_position)).angle()
-	get_parent().add_child(muzzle_flash)
+	#get_parent().add_child(muzzle_flash)
+	effects_scene.add_child(muzzle_flash)
 
 	reload_timer.start()
 	state_label.text = "State: RELOADING"

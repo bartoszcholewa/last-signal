@@ -1,12 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://bsmlrvmteivdw"]
+[gd_scene load_steps=9 format=3 uid="uid://bsmlrvmteivdw"]
 
 [ext_resource type="Script" uid="uid://bqnjoh6pgm0u6" path="res://scenes/turret_f/turret_f.gd" id="1_3wo5k"]
 [ext_resource type="PackedScene" uid="uid://cu3bsipy85liq" path="res://scenes/components/health_component.tscn" id="2_anqwv"]
 [ext_resource type="Texture2D" uid="uid://40xpun5gmjau" path="res://scenes/turret_f/turret_sheet.png" id="3_78ux1"]
 [ext_resource type="Script" uid="uid://c3xbaktpqfwup" path="res://scenes/turret_f/locked_target.gd" id="4_6dl4b"]
 [ext_resource type="Script" uid="uid://b2y7kjtkluise" path="res://scenes/turret_f/muzzle.gd" id="4_78ux1"]
+[ext_resource type="PackedScene" uid="uid://vdv3ofj5cs4c" path="res://scenes/components/hurtbox_component.tscn" id="6_qcyuj"]
 
-[node name="TurretF" type="Node2D" groups=["turret"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qcyuj"]
+radius = 95.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_acm63"]
+radius = 95.0
+
+[node name="TurretF" type="StaticBody2D" groups=["turret"]]
 script = ExtResource("1_3wo5k")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_anqwv")]
@@ -39,7 +46,6 @@ gizmo_extents = 20.0
 script = ExtResource("4_78ux1")
 
 [node name="ReloadTimer" type="Timer" parent="."]
-wait_time = 0.2
 one_shot = true
 
 [node name="DebugInfo" type="Node2D" parent="."]
@@ -74,3 +80,16 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "State: IDLE"
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_qcyuj")]
+collision_layer = 0
+collision_mask = 4
+health_component = NodePath("../HealthComponent")
+
+[node name="HurtboxCollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -29)
+shape = SubResource("CircleShape2D_qcyuj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -29)
+shape = SubResource("CircleShape2D_acm63")

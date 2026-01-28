@@ -27,7 +27,7 @@ max_speed = 100
 acceleration = 10.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_iiipk")]
-max_health = 3
+max_health = 10
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_agndl")]
 collision_layer = 0

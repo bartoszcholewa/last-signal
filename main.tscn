@@ -53,7 +53,11 @@ layout_mode = 2
 [node name="GameCamera" parent="." instance=ExtResource("1_1bvp3")]
 position = Vector2(960, 540)
 
+[node name="Effects" type="Node2D" parent="." groups=["effects"]]
+z_index = 1
+
 [node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="TurretF" parent="Entities" instance=ExtResource("1_ig7tw")]
 position = Vector2(960, 540)
@@ -62,10 +66,10 @@ position = Vector2(960, 540)
 position = Vector2(68, 63)
 
 [node name="BasicEnemy2" parent="Entities" instance=ExtResource("2_0xm2m")]
-position = Vector2(491, 53)
+position = Vector2(53, 905)
 
 [node name="BasicEnemy3" parent="Entities" instance=ExtResource("2_0xm2m")]
 position = Vector2(1871, 55)
 
 [node name="BasicEnemy4" parent="Entities" instance=ExtResource("2_0xm2m")]
-position = Vector2(1498, 64)
+position = Vector2(1849, 896)
