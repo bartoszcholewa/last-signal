@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://c0m67fwbtxh6c" path="res://game_camera.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bsmlrvmteivdw" path="res://scenes/turret_f/turret_f.tscn" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://bqr7w8lfplud7" path="res://scenes/enemies/basic/basic_enemy.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dyy8taqy0b5sl" path="res://debug_info_switch.gd" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://dxwnlblpda60v" path="res://manual_controll_switch.gd" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cgh0xbooli1qs" path="res://scenes/enemies/robot/enemy_robot.tscn" id="6_7mycd"]
 
 [node name="Main" type="Node2D"]
 
@@ -62,14 +62,5 @@ y_sort_enabled = true
 [node name="TurretF" parent="Entities" instance=ExtResource("1_ig7tw")]
 position = Vector2(960, 540)
 
-[node name="BasicEnemy" parent="Entities" instance=ExtResource("2_0xm2m")]
-position = Vector2(68, 63)
-
-[node name="BasicEnemy2" parent="Entities" instance=ExtResource("2_0xm2m")]
-position = Vector2(53, 905)
-
-[node name="BasicEnemy3" parent="Entities" instance=ExtResource("2_0xm2m")]
-position = Vector2(1871, 55)
-
-[node name="BasicEnemy4" parent="Entities" instance=ExtResource("2_0xm2m")]
-position = Vector2(1849, 896)
+[node name="EnemyRobot" parent="Entities" groups=["enemy"] instance=ExtResource("6_7mycd")]
+position = Vector2(330, 543)
