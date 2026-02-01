@@ -4,7 +4,7 @@ const ZOOM_MIN: Vector2 = Vector2(0.5, 0.5)
 const ZOOM_MAX: Vector2 = Vector2(1.5, 1.5)
 const ZOOM_STEP: Vector2 = Vector2(0.1, 0.1)
 const ZOOM_SPEED: float = 10.0
-const ZOOM_INIT = ZOOM_MIN
+const ZOOM_INIT = Vector2(1.0, 1.0)
 
 var zoom_target: Vector2
 

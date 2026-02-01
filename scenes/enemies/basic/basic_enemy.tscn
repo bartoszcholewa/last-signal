@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqr7w8lfplud7"]
+[gd_scene format=3 uid="uid://bqr7w8lfplud7"]
 
 [ext_resource type="Texture2D" uid="uid://d3cmyv0pg02nj" path="res://scenes/enemies/basic/enemy_v1.png" id="1_2184v"]
 [ext_resource type="Script" uid="uid://bvukhbajgyd1y" path="res://scenes/enemies/basic/basic_enemy.gd" id="1_cdc21"]
@@ -16,42 +16,42 @@ radius = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_cdc21"]
 radius = 8.0
 
-[node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
+[node name="BasicEnemy" type="CharacterBody2D" unique_id=1595918124 groups=["enemy"]]
 collision_layer = 2
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_cdc21")
 
-[node name="VelocityComponent" parent="." instance=ExtResource("2_r4vp2")]
+[node name="VelocityComponent" parent="." unique_id=819224899 instance=ExtResource("2_r4vp2")]
 max_speed = 100
 acceleration = 10.0
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_iiipk")]
+[node name="HealthComponent" parent="." unique_id=882641921 instance=ExtResource("3_iiipk")]
 max_health = 10
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_agndl")]
+[node name="HurtboxComponent" parent="." unique_id=1273718153 node_paths=PackedStringArray("health_component") instance=ExtResource("5_agndl")]
 collision_layer = 0
 collision_mask = 256
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=380970607]
 visible = false
 shape = SubResource("CircleShape2D_agndl")
 
-[node name="HitboxComponent" parent="." instance=ExtResource("6_vdwxf")]
+[node name="HitboxComponent" parent="." unique_id=1618167847 instance=ExtResource("6_vdwxf")]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1922084864]
 visible = false
 shape = SubResource("CircleShape2D_vdwxf")
 
-[node name="Visuals" type="Node2D" parent="."]
+[node name="Visuals" type="Node2D" parent="." unique_id=589616250]
 scale = Vector2(0.2, 0.2)
 
-[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+[node name="Sprite2D" type="Sprite2D" parent="Visuals" unique_id=546539169]
 texture = ExtResource("1_2184v")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1357329860]
 visible = false
 shape = SubResource("CircleShape2D_cdc21")

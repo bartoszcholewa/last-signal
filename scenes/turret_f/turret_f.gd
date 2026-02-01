@@ -2,7 +2,9 @@ extends Node2D
 
 signal died
 
-const BULLET_SCENE: PackedScene = preload("uid://d35rd07yoeys4")
+#const BULLET_SCENE: PackedScene = preload("uid://d35rd07yoeys4")
+const BULLET2_SCENE: PackedScene = preload("uid://crb4d4tdeduu6")
+
 const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 
 @onready var turret_sprite: Sprite2D = %Sprite2D
@@ -13,7 +15,6 @@ const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 @onready var angle_label: Label = %AngleLabel
 @onready var velocity_label: Label = %VelocityLabel
 @onready var state_label: Label = %StateLabel
-@onready var debug_info: Node2D = $DebugInfo
 @onready var shoot_range: RayCast2D = %ShootRange
 
 var effects_scene: Node2D
@@ -83,7 +84,6 @@ func _process(delta):
 		if is_barrel_aligned(target_angle):
 			if GameEvents.manual_control:
 				if Input.is_action_just_pressed("manual_shoot"):
-					print("PEW!")
 					try_to_shoot()
 			else:
 				try_to_shoot()
@@ -229,10 +229,10 @@ func try_to_shoot() -> void:
 
 	shoot_range.enabled = false
 
-	var bullet: Bullet = BULLET_SCENE.instantiate()
+	var bullet: Bullet2 = BULLET2_SCENE.instantiate()
 	bullet.global_position = barrel_tip.global_position
 	var bullet_direction: Vector2 = bullet.global_position.direction_to(target_position)
-	bullet.start(bullet_direction)
+	bullet.fire(bullet_direction)
 	#get_parent().add_child(bullet)
 	effects_scene.add_child(bullet)
 
@@ -257,10 +257,8 @@ func get_iso_angle_to_target(target_pos: Vector2) -> float:
 
 
 func set_debug_info_display() -> void:
-	debug_info.visible = GameEvents.debug_info
 	barrel_tip.visible = GameEvents.debug_info
 	shoot_range.visible = GameEvents.debug_info
-
 
 
 func _on_debug_info_changed() -> void:

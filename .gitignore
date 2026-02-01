@@ -3,6 +3,7 @@
 /android/
 .nomedia
 godot-docs/
+.idea
 
 # Godot-specific ignores
 .import/

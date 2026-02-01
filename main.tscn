@@ -1,16 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnm0ploeugeyj"]
+[gd_scene format=3 uid="uid://dnm0ploeugeyj"]
 
 [ext_resource type="PackedScene" uid="uid://c0m67fwbtxh6c" path="res://game_camera.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bsmlrvmteivdw" path="res://scenes/turret_f/turret_f.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dyy8taqy0b5sl" path="res://debug_info_switch.gd" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://dxwnlblpda60v" path="res://manual_controll_switch.gd" id="3_h2yge"]
-[ext_resource type="PackedScene" uid="uid://cgh0xbooli1qs" path="res://scenes/enemies/robot/enemy_robot.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://c50cfbvm3867o" path="res://scenes/enemies/spider/enemy_spider.tscn" id="5_lquwl"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=309420432]
 
-[node name="GameUI" type="CanvasLayer" parent="."]
+[node name="GameUI" type="CanvasLayer" parent="." unique_id=1118879338]
 
-[node name="Panel" type="Panel" parent="GameUI"]
+[node name="Panel" type="Panel" parent="GameUI" unique_id=173858720]
 custom_minimum_size = Vector2(100, 120)
 anchors_preset = 12
 anchor_top = 1.0
@@ -20,7 +20,7 @@ offset_top = -130.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="GameUI/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="GameUI/Panel" unique_id=1353644062]
 layout_mode = 0
 offset_right = 173.0
 offset_bottom = 31.0
@@ -29,38 +29,44 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Panel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Panel/MarginContainer" unique_id=1470531283]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/Panel/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/Panel/MarginContainer/HBoxContainer" unique_id=1313867507]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="ManualControlSwitch" type="CheckButton" parent="GameUI/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="ManualControlSwitch" type="CheckButton" parent="GameUI/Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2061497432]
 layout_mode = 2
 text = "Manual Control"
 script = ExtResource("3_h2yge")
 
-[node name="DebugInfoSwitch" type="CheckButton" parent="GameUI/Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="DebugInfoSwitch" type="CheckButton" parent="GameUI/Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=514086272]
 layout_mode = 2
 text = "Debug Info"
 script = ExtResource("2_lquwl")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="GameUI/Panel/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameUI/Panel/MarginContainer/HBoxContainer" unique_id=9017624]
 layout_mode = 2
 
-[node name="GameCamera" parent="." instance=ExtResource("1_1bvp3")]
+[node name="GameCamera" parent="." unique_id=1888522952 instance=ExtResource("1_1bvp3")]
 position = Vector2(960, 540)
 
-[node name="Effects" type="Node2D" parent="." groups=["effects"]]
+[node name="Effects" type="Node2D" parent="." unique_id=969217771 groups=["effects"]]
 z_index = 1
 
-[node name="Entities" type="Node2D" parent="."]
+[node name="Entities" type="Node2D" parent="." unique_id=539465199]
 y_sort_enabled = true
 
-[node name="TurretF" parent="Entities" instance=ExtResource("1_ig7tw")]
+[node name="TurretF" parent="Entities" unique_id=1415487009 instance=ExtResource("1_ig7tw")]
 position = Vector2(960, 540)
 
-[node name="EnemyRobot" parent="Entities" groups=["enemy"] instance=ExtResource("6_7mycd")]
-position = Vector2(330, 543)
+[node name="EnemySpider" parent="Entities" unique_id=1538011836 instance=ExtResource("5_lquwl")]
+position = Vector2(78, 577)
+
+[node name="EnemySpider2" parent="Entities" unique_id=1750998513 instance=ExtResource("5_lquwl")]
+position = Vector2(217, 516)
+
+[node name="EnemySpider3" parent="Entities" unique_id=1982657450 instance=ExtResource("5_lquwl")]
+position = Vector2(340, 459)

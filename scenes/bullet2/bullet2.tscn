@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://crb4d4tdeduu6"]
+
+[ext_resource type="Script" uid="uid://bnc2liqtx7nm1" path="res://scenes/bullet2/bullet_2.gd" id="1_gejl4"]
+[ext_resource type="Texture2D" uid="uid://bujfgs1wubenu" path="res://scenes/bullet/turret_v1_bullet.png" id="2_0wud1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ji5eo"]
+radius = 13.57
+height = 70.11
+
+[node name="Bullet2" type="Area2D" unique_id=2092080482]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("1_gejl4")
+speed = 1600.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=378942993]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ji5eo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=811689060]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_0wud1")
