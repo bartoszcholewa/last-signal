@@ -45,6 +45,7 @@ func process(_delta: float) -> void:
 # PRIVATE
 # ═══════════════════════════════════════════════
 
+
 func _update_facing(target: Node2D) -> void:
 	var dir_vec: Vector2 = (target.global_position - owner_node.global_position).normalized()
 	var new_angle: int = DirectionUtil.vector_to_angle(dir_vec)

@@ -48,7 +48,12 @@ var health: int:
 
 # --- Direction ---
 # Stored as the snapped angle in degrees.  0 = right.
-var current_direction: int = 0
+var current_direction: int = 0:
+	get:
+		return current_direction
+	set(value):
+		current_direction = value
+		%RotationLabel.text = "Angle: %d°" % current_direction
 
 
 # ═══════════════════════════════════════════════

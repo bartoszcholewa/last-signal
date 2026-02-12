@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dyy8taqy0b5sl" path="res://debug_info_switch.gd" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://dxwnlblpda60v" path="res://manual_controll_switch.gd" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c50cfbvm3867o" path="res://scenes/enemies/spider/enemy_spider.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://ddfp2mc6s54l5" path="res://scenes/debug_turret/debug_turret.tscn" id="6_7mycd"]
 
 [node name="Main" type="Node2D" unique_id=309420432]
 
@@ -61,12 +62,37 @@ y_sort_enabled = true
 
 [node name="TurretF" parent="Entities" unique_id=1415487009 instance=ExtResource("1_ig7tw")]
 position = Vector2(960, 540)
+metadata/_edit_lock_ = true
 
 [node name="EnemySpider" parent="Entities" unique_id=1538011836 instance=ExtResource("5_lquwl")]
-position = Vector2(78, 577)
+position = Vector2(970, 101)
 
-[node name="EnemySpider2" parent="Entities" unique_id=1750998513 instance=ExtResource("5_lquwl")]
-position = Vector2(217, 516)
+[node name="DebugTurret" parent="Entities" unique_id=2039735170 instance=ExtResource("6_7mycd")]
+position = Vector2(1274, 109)
 
-[node name="EnemySpider3" parent="Entities" unique_id=1982657450 instance=ExtResource("5_lquwl")]
-position = Vector2(340, 459)
+[node name="DebugTurret2" parent="Entities" unique_id=1312609102 instance=ExtResource("6_7mycd")]
+position = Vector2(1439, 287)
+
+[node name="DebugTurret3" parent="Entities" unique_id=1726627149 instance=ExtResource("6_7mycd")]
+position = Vector2(1411, 619)
+
+[node name="DebugTurret4" parent="Entities" unique_id=2100843909 instance=ExtResource("6_7mycd")]
+position = Vector2(1107, 842)
+
+[node name="DebugTurret5" parent="Entities" unique_id=1751713131 instance=ExtResource("6_7mycd")]
+position = Vector2(754, 836)
+
+[node name="DebugTurret6" parent="Entities" unique_id=640032692 instance=ExtResource("6_7mycd")]
+position = Vector2(392, 836)
+
+[node name="DebugTurret7" parent="Entities" unique_id=195173388 instance=ExtResource("6_7mycd")]
+position = Vector2(170, 643)
+
+[node name="DebugTurret8" parent="Entities" unique_id=1662806144 instance=ExtResource("6_7mycd")]
+position = Vector2(196, 414)
+
+[node name="DebugTurret9" parent="Entities" unique_id=1301124446 instance=ExtResource("6_7mycd")]
+position = Vector2(423, 260)
+
+[node name="DebugTurret10" parent="Entities" unique_id=177866198 instance=ExtResource("6_7mycd")]
+position = Vector2(708, 333)

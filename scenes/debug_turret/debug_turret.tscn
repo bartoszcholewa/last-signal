@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ddfp2mc6s54l5"]
+
+[ext_resource type="Texture2D" uid="uid://d3cmyv0pg02nj" path="res://scenes/enemies/basic/enemy_v1.png" id="1_5oy3k"]
+[ext_resource type="Script" uid="uid://bgmnb312xn054" path="res://scenes/debug_turret/debug_turret.gd" id="1_qlogh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlipq"]
+radius = 12.0
+
+[node name="DebugTurret" type="StaticBody2D" unique_id=2039735170 groups=["turret"]]
+script = ExtResource("1_qlogh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=333098410]
+shape = SubResource("CircleShape2D_qlipq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1439341869]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_5oy3k")

@@ -79,9 +79,7 @@ func _on_death_animation_finished() -> void:
 
 	# Freeze on the very last frame of the animation
 	_sprite.frame = _sprite.sprite_frames.get_frame_count(_sprite.animation) - 1
-	print(_sprite.frame)
 	_sprite.pause()
-	print(_sprite.frame)
 
 	# Disconnect — we no longer need this signal
 	if _sprite.animation_finished.is_connected(_on_death_animation_finished):

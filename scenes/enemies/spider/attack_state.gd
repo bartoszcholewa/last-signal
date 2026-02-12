@@ -93,7 +93,6 @@ func _swing() -> void:
 # ═══════════════════════════════════════════════
 
 func _deal_damage() -> void:
-	print("Deal Damage")
 	_hit_dealt = true
 
 	var target: Node2D = owner_node.get_current_target()
@@ -108,3 +107,5 @@ func _deal_damage() -> void:
 	# Call the target's take_damage (adapt to your damage system)
 	if target.has_method("take_damage"):
 		target.take_damage(damage)
+	else:
+		push_warning("Target %s does not have method `take_damage`" % target)
