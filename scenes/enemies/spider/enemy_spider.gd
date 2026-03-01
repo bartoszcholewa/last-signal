@@ -56,6 +56,7 @@ var current_direction: int = 0:
 		current_direction = value
 		%RotationLabel.text = "Angle: %d°" % current_direction
 
+const ENEMY_HIT_PARTICLES_SCENE: PackedScene = preload("uid://cktmo3cffxcqq")
 
 # ═══════════════════════════════════════════════
 # INTERNAL
@@ -102,6 +103,14 @@ func get_current_target() -> Node2D:
 		_target = players[0]
 	return _target
 
+# ═══════════════════════════════════════════════
+# EFFECTS
+# ═══════════════════════════════════════════════
+
+func spawn_hit_particles():
+	var hit_particles: Node2D = ENEMY_HIT_PARTICLES_SCENE.instantiate()
+	hit_particles.global_position = global_position
+	get_parent().add_child(hit_particles)
 
 # ═══════════════════════════════════════════════
 # DAMAGE / HEALTH
@@ -110,6 +119,7 @@ func get_current_target() -> Node2D:
 func take_damage(amount: int) -> void:
 	health -= amount
 	damaged.emit()
+	spawn_hit_particles()
 	if health <= 0:
 		health = 0
 		_die()
