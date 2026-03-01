@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://b58ebmeo2de7p"]
+
+[ext_resource type="Texture2D" uid="uid://dbbwi5wrxvirb" path="res://effects/particles.png" id="1_6bx8d"]
+
+[sub_resource type="Animation" id="Animation_6bx8d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_fdhie"]
+resource_name = "default"
+length = 55.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(54),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3qek8"]
+_data = {
+&"RESET": SubResource("Animation_6bx8d"),
+&"default": SubResource("Animation_fdhie")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fdhie"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_fdhie"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6564103, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3qek8"]
+curve = SubResource("Curve_fdhie")
+
+[sub_resource type="Gradient" id="Gradient_6bx8d"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.28867924, 0.053118095, 0.036939725, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fdhie"]
+gradient = SubResource("Gradient_6bx8d")
+
+[sub_resource type="Curve" id="Curve_6bx8d"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.17435898, 1), 0.0, 0.0, 0, 0, Vector2(0.5333333, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_fdhie"]
+curve = SubResource("Curve_6bx8d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3qek8"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 32.0
+angle_min = -720.0
+angle_max = 720.0
+spread = 100.922
+gravity = Vector3(0, 0, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_fdhie")
+color_initial_ramp = SubResource("GradientTexture1D_fdhie")
+alpha_curve = SubResource("CurveTexture_3qek8")
+anim_offset_max = 1.0
+
+[node name="BloodPoolEffect" type="Node2D" unique_id=301797653]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=849569214]
+libraries/ = SubResource("AnimationLibrary_3qek8")
+autoplay = &"default"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1023997188]
+material = SubResource("CanvasItemMaterial_fdhie")
+emitting = false
+amount = 10
+texture = ExtResource("1_6bx8d")
+lifetime = 50.0
+one_shot = true
+explosiveness = 0.98
+fixed_fps = 0
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_3qek8")

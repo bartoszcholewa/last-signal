@@ -58,6 +58,7 @@ var current_direction: int = 0:
 
 const ENEMY_HIT_PARTICLES_SCENE: PackedScene = preload("uid://cktmo3cffxcqq")
 const ENEMY_BLOOD_PARTICLES_SCENE: PackedScene = preload("uid://clucb5qfwuwi0")
+const BLOOD_POOL_EFFECT_SCENE: PackedScene = preload("uid://b58ebmeo2de7p")
 
 
 # ═══════════════════════════════════════════════
@@ -122,6 +123,11 @@ func spawn_blood_particles():
 	blood_particles.global_position = global_position
 	background_effects_scene.add_child(blood_particles)
 
+func spawn_blood_pool():
+	var blood_pool: Node2D = BLOOD_POOL_EFFECT_SCENE.instantiate()
+	blood_pool.global_position = global_position
+	background_effects_scene.add_child(blood_pool)
+
 # ═══════════════════════════════════════════════
 # DAMAGE / HEALTH
 # ═══════════════════════════════════════════════
@@ -137,5 +143,6 @@ func take_damage(amount: int) -> void:
 
 
 func _die() -> void:
+	spawn_blood_pool()
 	# Transition to Die — the DieState handles everything from here
 	_state_machine.transition_to("Die")
