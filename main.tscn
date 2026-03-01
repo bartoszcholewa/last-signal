@@ -6,6 +6,9 @@
 [ext_resource type="Script" uid="uid://dxwnlblpda60v" path="res://manual_controll_switch.gd" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c50cfbvm3867o" path="res://scenes/enemies/spider/enemy_spider.tscn" id="5_lquwl"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lquwl"]
+noise_type = 3
+
 [node name="Main" type="Node2D" unique_id=309420432]
 
 [node name="GameUI" type="CanvasLayer" parent="." unique_id=1118879338]
@@ -52,6 +55,7 @@ layout_mode = 2
 
 [node name="GameCamera" parent="." unique_id=1888522952 instance=ExtResource("1_1bvp3")]
 position = Vector2(960, 540)
+noise_texture = SubResource("FastNoiseLite_lquwl")
 
 [node name="BackgroudEffects" type="Node2D" parent="." unique_id=1983476721 groups=["background_effects"]]
 

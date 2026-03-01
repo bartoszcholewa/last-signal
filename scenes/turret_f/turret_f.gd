@@ -197,7 +197,7 @@ func set_turret_rotation_frame():
 func lock_target(position: Vector2) -> float:
 	## Get angle to selected target
 	var true_pivot_global_position = global_position + turret_pivot_offset
-	var angle_to_target: float = true_pivot_global_position.direction_to(target_position).angle()
+	var angle_to_target: float = true_pivot_global_position.direction_to(position).angle()
 	shoot_range.global_rotation = angle_to_target
 	return angle_to_target
 
@@ -240,6 +240,8 @@ func try_to_shoot() -> void:
 
 	reload_timer.start()
 	state_label.text = "State: RELOADING"
+
+	GameCamera.shake(1)
 
 func get_iso_angle_to_target(target_pos: Vector2) -> float:
 	# Get vector from turret to target
