@@ -42,6 +42,7 @@ func enter() -> void:
 	# Disable physics — dead spiders don't move or collide as enemies
 	owner_node.set_process(false)          # stop the owner's _process
 	owner_node.set_physics_process(false)  # stop the owner's _physics_process
+	owner_node.remove_from_group("enemy")
 	# Disable the enemy's collision shape so it no longer blocks movement
 	_disable_shape.call_deferred()
 

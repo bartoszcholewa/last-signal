@@ -16,6 +16,7 @@ const MUZZLE_FLASH_SCENE: PackedScene = preload("uid://3ncbiuqnbnnb")
 @onready var velocity_label: Label = %VelocityLabel
 @onready var state_label: Label = %StateLabel
 @onready var shoot_range: RayCast2D = %ShootRange
+@onready var target_label: Label = %TargetLabel
 
 var effects_scene: Node2D
 
@@ -58,7 +59,6 @@ func _ready() -> void:
 	GameEvents.debug_info_changed.connect(_on_debug_info_changed)
 
 	turret_pivot_offset = $Visuals.position
-	print(turret_pivot_offset)
 
 	# Cache visual scene node
 	effects_scene = get_tree().get_first_node_in_group("effects")
@@ -69,14 +69,10 @@ func _process(delta):
 
 	if GameEvents.manual_control:
 		target_position = get_global_mouse_position()
-
 	else:
 		target_position = find_target_position()
 
-	if not target_position:
-		return
-
-	var target_angle: float = lock_target()
+	var target_angle: float = lock_target(target_position)
 
 	if is_target_in_range():
 		set_rotation_to_target(target_angle, delta)
@@ -198,7 +194,7 @@ func set_turret_rotation_frame():
 	barrel_tip.position.y = sin(rads) * current_barrel_length * iso_squash_ratio
 
 
-func lock_target() -> float:
+func lock_target(position: Vector2) -> float:
 	## Get angle to selected target
 	var true_pivot_global_position = global_position + turret_pivot_offset
 	var angle_to_target: float = true_pivot_global_position.direction_to(target_position).angle()
