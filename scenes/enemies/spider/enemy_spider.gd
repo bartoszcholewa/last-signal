@@ -57,6 +57,8 @@ var current_direction: int = 0:
 		%RotationLabel.text = "Angle: %d°" % current_direction
 
 const ENEMY_HIT_PARTICLES_SCENE: PackedScene = preload("uid://cktmo3cffxcqq")
+const ENEMY_BLOOD_PARTICLES_SCENE: PackedScene = preload("uid://clucb5qfwuwi0")
+
 
 # ═══════════════════════════════════════════════
 # INTERNAL
@@ -64,6 +66,7 @@ const ENEMY_HIT_PARTICLES_SCENE: PackedScene = preload("uid://cktmo3cffxcqq")
 
 var _state_machine: Node   # cached reference to the StateMachine child
 var _target: Node2D = null # current chase/attack target
+var background_effects_scene: Node2D
 
 
 # ═══════════════════════════════════════════════
@@ -76,6 +79,8 @@ func _ready() -> void:
 
 	# Boot the FSM into Spawn — SpawnState transitions to Idle when it's done
 	_state_machine.initialize("Spawn")
+
+	background_effects_scene = get_tree().get_first_node_in_group("background_effects")
 
 
 func _process(delta: float) -> void:
@@ -112,6 +117,11 @@ func spawn_hit_particles():
 	hit_particles.global_position = global_position
 	get_parent().add_child(hit_particles)
 
+func spawn_blood_particles():
+	var blood_particles: Node2D = ENEMY_BLOOD_PARTICLES_SCENE.instantiate()
+	blood_particles.global_position = global_position
+	background_effects_scene.add_child(blood_particles)
+
 # ═══════════════════════════════════════════════
 # DAMAGE / HEALTH
 # ═══════════════════════════════════════════════
@@ -120,6 +130,7 @@ func take_damage(amount: int) -> void:
 	health -= amount
 	damaged.emit()
 	spawn_hit_particles()
+	spawn_blood_particles()
 	if health <= 0:
 		health = 0
 		_die()

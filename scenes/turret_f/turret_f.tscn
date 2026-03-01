@@ -35,6 +35,7 @@ unique_name_in_owner = true
 target_position = Vector2(500, 0)
 collision_mask = 256
 script = ExtResource("4_6dl4b")
+turret_range = 2000
 
 [node name="Line2D" type="Line2D" parent="Visuals/ShootRange" unique_id=263634855]
 width = 2.0

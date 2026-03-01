@@ -3036,7 +3036,6 @@ collision_layer = 256
 collision_mask = 256
 motion_mode = 1
 script = ExtResource("1_t3dm1")
-walk_speed = 80.0
 chase_range = 5000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1416976708]

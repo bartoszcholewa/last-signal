@@ -40,6 +40,7 @@ enemy=""
 turret=""
 visual=""
 effects=""
+background_effects=""
 
 [input]
 

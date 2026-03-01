@@ -53,6 +53,8 @@ layout_mode = 2
 [node name="GameCamera" parent="." unique_id=1888522952 instance=ExtResource("1_1bvp3")]
 position = Vector2(960, 540)
 
+[node name="BackgroudEffects" type="Node2D" parent="." unique_id=1983476721 groups=["background_effects"]]
+
 [node name="Effects" type="Node2D" parent="." unique_id=969217771 groups=["effects"]]
 z_index = 1
 
@@ -64,25 +66,31 @@ position = Vector2(960, 540)
 metadata/_edit_lock_ = true
 
 [node name="EnemySpider" parent="Entities" unique_id=1538011836 instance=ExtResource("5_lquwl")]
-position = Vector2(97, 517)
+position = Vector2(-772, 525)
+
+[node name="EnemySpider9" parent="Entities" unique_id=697280118 instance=ExtResource("5_lquwl")]
+position = Vector2(197, 132)
+
+[node name="EnemySpider10" parent="Entities" unique_id=976945673 instance=ExtResource("5_lquwl")]
+position = Vector2(1860, 1022)
 
 [node name="EnemySpider2" parent="Entities" unique_id=1720792035 instance=ExtResource("5_lquwl")]
-position = Vector2(351, 71)
+position = Vector2(-606, -455)
 
 [node name="EnemySpider3" parent="Entities" unique_id=93736568 instance=ExtResource("5_lquwl")]
-position = Vector2(299, 901)
+position = Vector2(-277, 1374)
 
 [node name="EnemySpider4" parent="Entities" unique_id=1907035168 instance=ExtResource("5_lquwl")]
-position = Vector2(1598, 893)
+position = Vector2(2506, 1635)
 
 [node name="EnemySpider5" parent="Entities" unique_id=1771844070 instance=ExtResource("5_lquwl")]
-position = Vector2(1588, 63)
+position = Vector2(2271, -590)
 
 [node name="EnemySpider6" parent="Entities" unique_id=1113914854 instance=ExtResource("5_lquwl")]
-position = Vector2(1837, 488)
+position = Vector2(2945, 539)
 
 [node name="EnemySpider7" parent="Entities" unique_id=1226553534 instance=ExtResource("5_lquwl")]
-position = Vector2(947, 65)
+position = Vector2(906, -513)
 
 [node name="EnemySpider8" parent="Entities" unique_id=421284902 instance=ExtResource("5_lquwl")]
-position = Vector2(976, 1027)
+position = Vector2(873, 1720)
