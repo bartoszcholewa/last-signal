@@ -3,7 +3,7 @@ extends Node
 signal debug_info_changed
 
 var manual_control: bool = false
-var debug_info: bool = true:
+var debug_info: bool = false:
 	set = set_debug_info
 
 

@@ -18,6 +18,7 @@
 extends CharacterBody2D
 class_name Spider
 
+signal damaged
 
 # ═══════════════════════════════════════════════
 # EXPORTS  — tweak everything from the Inspector
@@ -108,6 +109,7 @@ func get_current_target() -> Node2D:
 
 func take_damage(amount: int) -> void:
 	health -= amount
+	damaged.emit()
 	if health <= 0:
 		health = 0
 		_die()
