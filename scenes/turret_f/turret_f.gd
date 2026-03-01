@@ -26,13 +26,13 @@ var frames_count: int = 64
 var rotation_offset_degrees: float = 0
 var current_rotation: float = deg_to_rad(0)
 ## Turret speed RAD/s
-var max_rotation_speed: float = 5.0 #5.0
+var max_rotation_speed: float = 2.0 #5.0
 
 ## How fast it reaches max speed
-var acceleration: float = 15.0 #15.0
+var acceleration: float = 10.0 #15.0
 
 ## How fast it brakes when close
-var deceleration: float = 30.0 # 30.0
+var deceleration: float = 20.0 # 30.0
 
 ## The current speed of the barrel
 var current_velocity: float = 0.0

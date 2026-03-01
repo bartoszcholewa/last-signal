@@ -41,6 +41,7 @@ turret=""
 visual=""
 effects=""
 background_effects=""
+entities=""
 
 [input]
 

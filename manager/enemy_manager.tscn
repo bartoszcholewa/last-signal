@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cob7corjih1ma"]
+
+[ext_resource type="Script" uid="uid://dcds01k0aqgy0" path="res://manager/enemy_manager.gd" id="1_fq440"]
+
+[node name="EnemyManager" type="Node" unique_id=664791548]
+script = ExtResource("1_fq440")
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=1010722945]
+unique_name_in_owner = true
+wait_time = 3.0
+autostart = true

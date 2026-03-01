@@ -35,7 +35,6 @@ unique_name_in_owner = true
 target_position = Vector2(500, 0)
 collision_mask = 256
 script = ExtResource("4_6dl4b")
-turret_range = 2000
 
 [node name="Line2D" type="Line2D" parent="Visuals/ShootRange" unique_id=263634855]
 width = 2.0
@@ -48,7 +47,6 @@ gizmo_extents = 20.0
 script = ExtResource("4_78ux1")
 
 [node name="ReloadTimer" type="Timer" parent="." unique_id=910391331]
-wait_time = 0.3
 one_shot = true
 
 [node name="HurtboxComponent" parent="." unique_id=185428949 node_paths=PackedStringArray("health_component") instance=ExtResource("6_qcyuj")]
